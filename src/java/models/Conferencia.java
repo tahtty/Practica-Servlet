@@ -5,7 +5,9 @@
  */
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -54,6 +56,14 @@ public class Conferencia {
         this.nombre = nombre;
         this.fecha = fecha;
         this.agregar = agregar;
+    }
+    
+    public static List<Conferencia> getUsuarios() {
+        ArrayList<Conferencia> lista = new ArrayList<>();
+//        lista.add(new Conferencia("Marco Calderon", "mcalderon@example.com", "Desarrollador"));
+//        lista.add(new Conferencia("Jorge Forlan", "jforlan@example.com", "Arquitecto"));
+//        lista.add(new Conferencia("Luis Perez", "lperez@example.com", "Contador"));
+        return lista;
     }
     
     
