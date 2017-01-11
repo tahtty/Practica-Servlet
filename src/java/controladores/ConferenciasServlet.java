@@ -37,10 +37,9 @@ public class ConferenciasServlet extends HttpServlet {
         String action = request.getParameter("action");
             switch (action){
                 case "crear":{
-                    List<Conferencia> lista=new ArrayList();
-                    request.getAttribute("conferencias");
-                    
-                    Conferencia.setConferencia(lista);
+                    Conferencia conf;
+                    conf=(Conferencia)request.getAttribute("conferencia");
+                    Conferencia.setConferencia(conf);
                     PrintWriter pw = response.getWriter();
                     pw.print("{ mensaje: 'Ingreso exitoso' }");
                     break;
