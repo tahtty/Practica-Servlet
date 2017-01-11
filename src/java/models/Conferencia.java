@@ -48,6 +48,13 @@ public class Conferencia {
     public void setAgregar(String agregar) {
         this.agregar = agregar;
     }
+
+    public Conferencia(int id, String nombre, Date fecha, String agregar) {
+        this.id = id;
+        this.nombre = nombre;
+        this.fecha = fecha;
+        this.agregar = agregar;
+    }
     
     
 }
