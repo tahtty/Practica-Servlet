@@ -66,8 +66,12 @@ public class Conferencia {
         return lista;
     }
     
-    public static void setConferencia(){
+    public static void setConferencia(List<Conferencia> lista){
 //        de la base
+    }
+    
+    public static boolean deleteConferencia(String id){
+        
     }
     
     

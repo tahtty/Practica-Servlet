@@ -8,6 +8,7 @@ package controladores;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,10 +37,11 @@ public class ConferenciasServlet extends HttpServlet {
         String action = request.getParameter("action");
             switch (action){
                 case "crear":{
-                    request.setAttribute("usuarios",Conferencia);
-                    PrintWriter pw = response.getWriter(
-                            
-                    );
+                    List<Conferencia> lista=new ArrayList();
+                    request.getAttribute("conferencias");
+                    
+                    Conferencia.setConferencia(lista);
+                    PrintWriter pw = response.getWriter();
                     pw.print("{ mensaje: 'Ingreso exitoso' }");
                     break;
                 }
@@ -50,6 +52,7 @@ public class ConferenciasServlet extends HttpServlet {
                     break;
                 }
                 case "leer":{
+                    request.setAttribute("usuarios",Conferencia.getConferencia());
                     break;
                 }
                 default:{
