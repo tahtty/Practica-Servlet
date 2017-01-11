@@ -51,11 +51,11 @@ public class ConferenciasServlet extends HttpServlet {
                     break;
                 }
                 case "leer":{
-                    request.setAttribute("usuarios",Conferencia.getConferencia());
+                    request.setAttribute("conferencias",Conferencia.getConferencia());
                     break;
                 }
                 default:{
-                    
+                    System.out.println("Acción no compatible");
                 }
             }
     }
