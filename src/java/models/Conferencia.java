@@ -58,12 +58,16 @@ public class Conferencia {
         this.agregar = agregar;
     }
     
-    public static List<Conferencia> getUsuarios() {
+    public static List<Conferencia> getConferencia() {
         ArrayList<Conferencia> lista = new ArrayList<>();
 //        lista.add(new Conferencia("Marco Calderon", "mcalderon@example.com", "Desarrollador"));
 //        lista.add(new Conferencia("Jorge Forlan", "jforlan@example.com", "Arquitecto"));
 //        lista.add(new Conferencia("Luis Perez", "lperez@example.com", "Contador"));
         return lista;
+    }
+    
+    public static void setConferencia(){
+//        de la base
     }
     
     
