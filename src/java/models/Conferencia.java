@@ -5,19 +5,44 @@
  */
 package models;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author CltControl
  */
 public class Conferencia {
-    private int id;
+    public Connection conn=null;
+    public Statement st=null;
+    public PreparedStatement ps=null;
+    public ResultSet rs=null;
+    private int  id;
     private String nombre;
     private Date fecha;
-    private String agregar;
+    private String descripcion;
+
+    public Conferencia() {
+      SimpleDateFormat par =new SimpleDateFormat("dd-MM-yy");
+        this.id =0;
+        this.nombre =" ";
+        try {
+            this.fecha =par.parse("15/1/2017");
+        } catch (ParseException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.descripcion =" ";
+    }
 
     public int getId() {
         return id;
@@ -44,28 +69,40 @@ public class Conferencia {
     }
 
     public String getAgregar() {
-        return agregar;
+        return descripcion;
     }
 
     public void setAgregar(String agregar) {
-        this.agregar = agregar;
+        this.descripcion = agregar;
     }
 
     public Conferencia(int id, String nombre, Date fecha, String agregar) {
         this.id = id;
         this.nombre = nombre;
         this.fecha = fecha;
-        this.agregar = agregar;
+        this.descripcion = agregar;
     }
     
-    public static List<Conferencia> getConferencia() {
+    public List<Conferencia> getConferencia(){
         ArrayList<Conferencia> lista = new ArrayList<>();
-//        lista.add(new Conferencia("Marco Calderon", "mcalderon@example.com", "Desarrollador"));
-//        lista.add(new Conferencia("Jorge Forlan", "jforlan@example.com", "Arquitecto"));
-//        lista.add(new Conferencia("Luis Perez", "lperez@example.com", "Contador"));
+        try {
+            conn=Conexion.obtener();
+            st=conn.createStatement();
+            rs=st.executeQuery("select * from conferencia");
+            while(rs.next()){
+            lista.add(new Conferencia(rs.getInt(1),rs.getString(2),rs.getDate(3),rs.getString(4)));
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
         return lista;
     }
-    
+        
     public static void setConferencia(Conferencia conf){
 //        de la base
     }
@@ -75,5 +112,20 @@ public class Conferencia {
         return false;
     }
     
-    
+    public boolean eliminar(Conferencia Co){
+        try {
+            conn=Conexion.obtener();
+            st=conn.createStatement();
+            st.executeUpdate("delete from conferencia where idConferencia="+Co.getId());
+            conn.close();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        }
+        return false;
+    }
 }

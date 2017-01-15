@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,25 +34,44 @@ public class ConferenciasServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-            switch (action){
-                case "crear":{
-                    Conferencia conf;
-                    conf=(Conferencia)request.getAttribute("conferencia");
-                    Conferencia.setConferencia(conf);
-                    PrintWriter pw = response.getWriter();
-                    pw.print("{ mensaje: 'Ingreso exitoso' }");
+        throws ServletException, IOException {
+        Conferencia co= new Conferencia();
+        String action = request.getParameter("opcion");
+        String id= request.getParameter("id");
+        String exito="Operacion exitosa";
+        String Error="Operacion Fallida";
+        System.out.println(action);
+        
+        
+        switch (action){
+                case "1":{
+                  
                     break;
                 }
-                case "borrar":{
+                case "2":{
+                    
+                    co.setId(Integer.parseInt("1"));
+                    if(co.eliminar(co))
+                    {
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/conferencia.jsp");
+                        dispatcher.forward(request,response);
+                    }else{
+                        request.setAttribute("mensaje",Error);
+                        request.setAttribute("mensaje",exito);
+                          response.setContentType("text/html");
+                            PrintWriter pw = response.getWriter();
+                            pw.print("{ mensaje: 'error' }");
+                    }                    
+                    
+                    break;
+                
+                }
+               
+                case "3":{
                     break;
                 }
-                case "modificar":{
-                    break;
-                }
-                case "leer":{
-                    request.setAttribute("conferencias",Conferencia.getConferencia());
+                case "4":{
+                  
                     break;
                 }
                 default:{
