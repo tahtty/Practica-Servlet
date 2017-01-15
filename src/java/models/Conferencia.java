@@ -185,6 +185,32 @@ public class Conferencia {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static void update(String name, String fecha, String descp, String id){
+        try {
+            DataSource base= getBase();
+            Connection con=base.getConnection();
+            SimpleDateFormat para =new SimpleDateFormat("yyyy-MM-dd"); 
+            Date parsed=para.parse(fecha);
+            
+           
+            PreparedStatement psa = con.prepareStatement("UPDATE conferencia SET Nombre ='"+name+"', Fecha='"+fecha+"', Descripcion='"+descp+"' WHERE id='"+id+"'");
+            
+            psa.setString(1,name);
+            java.sql.Date data = new java.sql.Date(parsed.getTime());
+            psa.setDate(2,data);
+            psa.setString(3,descp);
+            psa.executeUpdate();
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        } catch (NamingException | ParseException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private static DataSource getBase() throws NamingException {
         Context c = new InitialContext();

@@ -45,9 +45,25 @@ public class ConferenciasServlet extends HttpServlet {
         else if("2".equals(action)){
             Conferencia.eliminar(id);
         }
+        
+        
+        else if("3".equals(action)){
+            String nombre = request.getParameter("nombre");
+            String fecha = request.getParameter("fecha");
+            String descripcion = request.getParameter("descripcion");
+            Conferencia.update(nombre, fecha, descripcion, id);
+        }
+        
         try(PrintWriter out= response.getWriter()){
             request.getRequestDispatcher("conferencia.jsp").forward(request, response);
         }
+        
+        
+        try(PrintWriter out= response.getWriter()){
+            request.getRequestDispatcher("conferencia.jsp").forward(request, response);
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

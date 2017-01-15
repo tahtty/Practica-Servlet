@@ -82,7 +82,7 @@
             <td><%=c.getNombre()%></td>
             <td><%=c.getFechaS()%></td>
             <td><%=c.getAgregar()%></td>
-            <td><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+            <td><a href="#"data-toggle="modal" data-target="#modalUsuarios"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
             <td>
                <a class="eliminar "href="#"data-toggle="modal" data-target="#modalEliminar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
             </td>
