@@ -117,9 +117,40 @@
             </div>
         </form>
       </div>
-      
     </div>
   </div>
+  <!-- Modal Ingresar -->
+    <div class="modal fade" id="modalUsuarios" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="Conferencias" method="post">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Ingresar Conferencia</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="inputNombre" name="nombre" placeholder="Nombre de la conferencia">
+                </div>
+                <div class="form-group">
+                  <input type="date" class="form-control" id="inputFecha" name="fecha" placeholder="Fecha de la conferencia">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="comment" name="descripcion" placeholder="Descripcion de la conferencia"></textarea>
+                </div>
+                <div class="form-group">
+                <input type="hidden" class="form-control" id="id" name="id" value="">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Ingresar</button>
+              <input type="hidden"  name="opcion" value="1">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
       <script>
           $(document).ready(function(){
             $(".eliminar").click(function(ev) {

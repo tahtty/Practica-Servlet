@@ -38,7 +38,7 @@ public class Conferencia {
     
 
     public Conferencia() {
-      SimpleDateFormat par =new SimpleDateFormat("dd-MM-yy");
+      SimpleDateFormat par =new SimpleDateFormat("yyyy-MM-dd");
         this.id =0;
         this.nombre =" ";
         try {
@@ -142,21 +142,48 @@ public class Conferencia {
         return false;
     }
     
-    public boolean eliminar(String id){
+    public static void eliminar(String id){
         try {
-            conn=Conexion.obtener();
-            st=conn.createStatement();
-            st.executeUpdate("delete from conferencia where idConferencia="+id);
+            DataSource base= getBase();
+            Connection con=base.getConnection();
+            con=Conexion.obtener();
+             Statement stp=con.createStatement();
+            stp.executeUpdate("delete from conferencia where idConferencia="+id);
             
-            return true;
+  
         } catch (SQLException ex) {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
             ex.getMessage();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
             ex.getMessage();
+        } catch (NamingException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        
+    }
+    public static void insert(String name, String fecha, String descp){
+        try {
+            DataSource base= getBase();
+            Connection con=base.getConnection();
+           SimpleDateFormat para =new SimpleDateFormat("yyyy-MM-dd"); 
+           Date parsed=para.parse(fecha);
+            
+           PreparedStatement psa=con.prepareStatement("insert into conferencia (Nombre,Fecha,Descripcion) values(?,?,?)");
+            psa.setString(1,name);
+           java.sql.Date data = new java.sql.Date(parsed.getTime());
+            psa.setDate(2,data);
+            psa.setString(3,descp);
+            psa.executeUpdate();
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        } catch (NamingException | ParseException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private static DataSource getBase() throws NamingException {

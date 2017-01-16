@@ -36,10 +36,14 @@ public class ConferenciasServlet extends HttpServlet {
         String exito="Operacion exitosa";
         String Error="Operacion Fallida";
         String id= request.getParameter("key");
-        if("2".equals(action)){
-            if (co.eliminar(id)){ 
-               
-            }
+        
+        if("1".equals(action)){
+            Conferencia.insert(request.getParameter("nombre"),request.getParameter("fecha"),request.getParameter("descripcion"));
+            
+            
+        }
+        else if("2".equals(action)){
+            Conferencia.eliminar(id);
         }
         try(PrintWriter out= response.getWriter()){
             request.getRequestDispatcher("conferencia.jsp").forward(request, response);
