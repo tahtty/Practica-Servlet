@@ -10,9 +10,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 /**
  *
@@ -89,6 +96,33 @@ public class Asistente {
         
     }
     
+    public static String insertAsistente(String cedula,String nombre, String apellido,int conferencia, String correo){
+        try {
+            DataSource base= getBase();
+            Connection con=base.getConnection();
+            
+           PreparedStatement psa=con.prepareStatement("insert into conferencia (Nombre,Fecha,Descripcion) values(?,?,?,?,?)");
+            psa.setString(1,cedula);
+            psa.setString(3,nombre);
+            psa.setString(3,apellido);
+            psa.setInt(3,conferencia);
+            psa.setString(3,correo);
+            psa.executeUpdate();
+            
+            con.close();
+            
+            return "Ingreso exitoso";
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        } catch (NamingException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return "Falló ingreso";
+    }
+    
     public ArrayList<Asistente> getAsistente(){
         ArrayList<Asistente> lista = new ArrayList();
         try {
@@ -107,6 +141,11 @@ public class Asistente {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
+    }
+    
+     private static DataSource getBase() throws NamingException {
+        Context c = new InitialContext();
+        return (DataSource) c.lookup("java:comp/env/base");
     }
     
     

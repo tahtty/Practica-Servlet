@@ -5,13 +5,17 @@
  */
 package controladores;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Asistente;
+import com.google.gson.Gson;
 
 /**
  *
@@ -31,19 +35,15 @@ public class InsertarAsistente extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertarAsistente</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertarAsistente at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        String cedula = request.getParameter("cedula");
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        int conferencia =parseInt(request.getParameter("conferencia"));
+        String correo = request.getParameter("correo");
+        String json = new Gson().toJson(Asistente.insertAsistente(cedula,nombre,apellido,conferencia,correo));
+        response.setContentType("aplication/json");
+        response.getWriter().write(json);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
