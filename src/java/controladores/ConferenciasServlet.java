@@ -7,8 +7,11 @@ package controladores;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,63 +24,23 @@ import models.Conferencia;
  *
  * @author Administrador
  */
-@WebServlet(name = "ConferenciasServlet", urlPatterns = {"/ConferenciasServlet"})
-public class ConferenciasServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+@WebServlet(name = "ConferenciasServlet", urlPatterns = {"/Conferencias"})
+public class ConferenciasServlet extends HttpServlet { 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+        throws ServletException, IOException,SQLException{
+        
+        response.setContentType("text/html;charset=UTF-8");
         Conferencia co= new Conferencia();
+        request.setAttribute("listaConferencias",co.getConferencia());
         String action = request.getParameter("opcion");
-        String id= request.getParameter("id");
         String exito="Operacion exitosa";
         String Error="Operacion Fallida";
-        System.out.println(action);
         
-        
-        switch (action){
-                case "1":{
-                  
-                    break;
-                }
-                case "2":{
-                    
-                    co.setId(Integer.parseInt("1"));
-                    if(co.eliminar(co))
-                    {
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/conferencia.jsp");
-                        dispatcher.forward(request,response);
-                    }else{
-                        request.setAttribute("mensaje",Error);
-                        request.setAttribute("mensaje",exito);
-                          response.setContentType("text/html");
-                            PrintWriter pw = response.getWriter();
-                            pw.print("{ mensaje: 'error' }");
-                    }                    
-                    
-                    break;
-                
-                }
-               
-                case "3":{
-                    break;
-                }
-                case "4":{
-                  
-                    break;
-                }
-                default:{
-                    System.out.println("Acción no compatible");
-                }
-            }
+        if("2".equals(action)){
+        }
+        try(PrintWriter out= response.getWriter()){
+            request.getRequestDispatcher("conferencia.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -92,7 +55,11 @@ public class ConferenciasServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConferenciasServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -106,7 +73,11 @@ public class ConferenciasServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConferenciasServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -118,5 +89,5 @@ public class ConferenciasServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }

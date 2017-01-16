@@ -17,6 +17,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 /**
  *
@@ -31,13 +35,14 @@ public class Conferencia {
     private String nombre;
     private Date fecha;
     private String descripcion;
+    
 
     public Conferencia() {
       SimpleDateFormat par =new SimpleDateFormat("dd-MM-yy");
         this.id =0;
         this.nombre =" ";
         try {
-            this.fecha =par.parse("15/1/2017");
+            this.fecha =par.parse("15-01-2017");
         } catch (ParseException ex) {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,6 +69,9 @@ public class Conferencia {
         return fecha;
     }
 
+    public String getFechaS(){
+       return fecha.toString();
+    }
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
@@ -82,9 +90,31 @@ public class Conferencia {
         this.fecha = fecha;
         this.descripcion = agregar;
     }
-    
-    public List<Conferencia> getConferencia(){
-        ArrayList<Conferencia> lista = new ArrayList<>();
+    /*
+    public static ArrayList<Conferencia> getConferencia(){
+        ArrayList<Conferencia> lista = new ArrayList();
+        try {
+            DataSource base= getBase();
+            Connection con=base.getConnection();
+            Statement sta=con.createStatement();
+            ResultSet rsa=sta.executeQuery("select * from conferencia");
+            while(rsa.next()){
+            lista.add(new Conferencia(rsa.getInt(1),rsa.getString(2),rsa.getDate(3),rsa.getString(4)));
+            }   
+            con.close();
+            return lista; 
+        } catch (SQLException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        } catch (NamingException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+        
+    }
+    */
+    public ArrayList<Conferencia> getConferencia(){
+        ArrayList<Conferencia> lista = new ArrayList();
         try {
             conn=Conexion.obtener();
             st=conn.createStatement();
@@ -92,16 +122,16 @@ public class Conferencia {
             while(rs.next()){
             lista.add(new Conferencia(rs.getInt(1),rs.getString(2),rs.getDate(3),rs.getString(4)));
             }
-            
+            return lista;
             
         } catch (SQLException ex) {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
         return lista;
     }
+   
         
     public static void setConferencia(Conferencia conf){
 //        de la base
@@ -128,4 +158,11 @@ public class Conferencia {
         }
         return false;
     }
+
+    private static DataSource getBase() throws NamingException {
+        Context c = new InitialContext();
+        return (DataSource) c.lookup("java:comp/env/base");
+    }
+    
+    
 }
