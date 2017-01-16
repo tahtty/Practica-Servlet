@@ -21,11 +21,13 @@
         <link rel="stylesheet" href="stylesheets/styles.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <style>
+          
+          <style>
             .id{
                 display: none;
             }
         </style>
+     
     </head>
     <body>
      <nav class="navbar navbar-inverse navbar-static-top">
@@ -59,7 +61,7 @@
         <thead>
           <tr>
             <th>#</th>
-            <th class="id">Id</th>
+            <th>Id</th>
             <th >Nombre</th>
             <th>Fecha</th>
             <th>Descripcion</th>
@@ -76,12 +78,14 @@
           %>
           <tr>
             <th scope="row"><%= cont %></th>
-            <td class="id"></td>
+            <td><%=c.getId()%></td>
             <td><%=c.getNombre()%></td>
             <td><%=c.getFechaS()%></td>
             <td><%=c.getAgregar()%></td>
             <td><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
-            <td><a href="#" data-toggle="modal" data-target="#modalEliminar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+            <td>
+               <a class="eliminar "href="#"data-toggle="modal" data-target="#modalEliminar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </td>
           </tr>
            <%
               cont++;
@@ -97,7 +101,7 @@
     
       <!-- Modal content-->
       <div class="modal-content">
-          <form action="Conferencia" method="post" name="formulario"> 
+          <form action="Conferencias" method="post" name="formulario"> 
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Eliminar</h4>
@@ -109,12 +113,22 @@
                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                <button type="submit" class="btn btn-primary">Eliminar</button>
                <input type="hidden" name="opcion" value="2">
+               <input type="hidden" class="form-control id" name="key" value="">
             </div>
         </form>
       </div>
       
     </div>
   </div>
-  
+      <script>
+          $(document).ready(function(){
+            $(".eliminar").click(function(ev) {
+            columnas = $($(ev.target).parents("tr")[0]).children();
+            $(".id").val($(columnas[1]).html());
+                console.log($(columnas[1]).html());
+            });
+          });
+      </script>
     </body>
+   
 </html>

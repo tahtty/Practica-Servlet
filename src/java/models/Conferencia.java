@@ -90,7 +90,7 @@ public class Conferencia {
         this.fecha = fecha;
         this.descripcion = agregar;
     }
-    /*
+    
     public static ArrayList<Conferencia> getConferencia(){
         ArrayList<Conferencia> lista = new ArrayList();
         try {
@@ -112,7 +112,7 @@ public class Conferencia {
         return lista;
         
     }
-    */
+    /*
     public ArrayList<Conferencia> getConferencia(){
         ArrayList<Conferencia> lista = new ArrayList();
         try {
@@ -131,7 +131,7 @@ public class Conferencia {
         }
         return lista;
     }
-   
+   */
         
     public static void setConferencia(Conferencia conf){
 //        de la base
@@ -142,12 +142,12 @@ public class Conferencia {
         return false;
     }
     
-    public boolean eliminar(Conferencia Co){
+    public boolean eliminar(String id){
         try {
             conn=Conexion.obtener();
             st=conn.createStatement();
-            st.executeUpdate("delete from conferencia where idConferencia="+Co.getId());
-            conn.close();
+            st.executeUpdate("delete from conferencia where idConferencia="+id);
+            
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);

@@ -31,12 +31,15 @@ public class ConferenciasServlet extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         Conferencia co= new Conferencia();
-        request.setAttribute("listaConferencias",co.getConferencia());
+        request.setAttribute("listaConferencias",Conferencia.getConferencia());
         String action = request.getParameter("opcion");
         String exito="Operacion exitosa";
         String Error="Operacion Fallida";
-        
+        String id= request.getParameter("key");
         if("2".equals(action)){
+            if (co.eliminar(id)){ 
+               
+            }
         }
         try(PrintWriter out= response.getWriter()){
             request.getRequestDispatcher("conferencia.jsp").forward(request, response);
