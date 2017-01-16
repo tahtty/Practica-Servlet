@@ -5,24 +5,23 @@
  */
 package controladores;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.Integer.parseInt;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Asistente;
-import com.google.gson.Gson;
+import models.Conferencia;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "InsertarAsistente", urlPatterns = {"/InsertarAsistente"})
-public class InsertarAsistente extends HttpServlet {
+@WebServlet(name = "AsistenteConferenciaServlet", urlPatterns = {"/AsistenteConferenciaServlet"})
+public class AsistenteConferenciaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,14 +34,9 @@ public class InsertarAsistente extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String cedula = request.getParameter("cedula");
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        int conferencia =parseInt(request.getParameter("conferencia"));
-        String correo = request.getParameter("correo");
-        String json = new Gson().toJson("{resultado: "+Asistente.insertAsistente(cedula,nombre,apellido,conferencia,correo)+"}");
-        response.setContentType("aplication/json");
+        String json=new Gson().toJson(Conferencia.getConferencia());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
     }
 

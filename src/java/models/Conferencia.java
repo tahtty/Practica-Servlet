@@ -148,7 +148,7 @@ public class Conferencia {
             Connection con=base.getConnection();
             con=Conexion.obtener();
              Statement stp=con.createStatement();
-            stp.executeUpdate("delete from conferencia where idConferencia="+id);
+            stp.executeUpdate("delete from conferencias where idConferencia="+id);
             
   
         } catch (SQLException ex) {

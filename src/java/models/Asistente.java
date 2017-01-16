@@ -26,10 +26,10 @@ import javax.sql.DataSource;
  * @author CltControl
  */
 public class Asistente {
-    public Connection conn=null;
-    public Statement st=null;
-    public PreparedStatement ps=null;
-    public ResultSet rs=null;
+    public static Connection conn=null;
+    public static Statement st=null;
+    public static PreparedStatement ps=null;
+    public static ResultSet rs=null;
     private int id;
     private String cedula;
     private String nombre;
@@ -103,10 +103,10 @@ public class Asistente {
             
            PreparedStatement psa=con.prepareStatement("insert into conferencia (Nombre,Fecha,Descripcion) values(?,?,?,?,?)");
             psa.setString(1,cedula);
-            psa.setString(3,nombre);
+            psa.setString(2,nombre);
             psa.setString(3,apellido);
-            psa.setInt(3,conferencia);
-            psa.setString(3,correo);
+            psa.setInt(4,conferencia);
+            psa.setString(5,correo);
             psa.executeUpdate();
             
             con.close();
@@ -123,7 +123,29 @@ public class Asistente {
         return "Falló ingreso";
     }
     
-    public ArrayList<Asistente> getAsistente(){
+    public static String deleteAsistente(int id){
+        try {
+            DataSource base= getBase();
+            Connection con=base.getConnection();
+            con=Conexion.obtener();
+             Statement stp=con.createStatement();
+            stp.executeUpdate("delete from asistentes where idConferencia="+id);
+            
+            return "Se ha eliminado correctamente";
+  
+        } catch (SQLException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getMessage();
+        } catch (NamingException ex) {
+            Logger.getLogger(Conferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "Falló la eliminación";
+    }
+    
+    public static ArrayList<Asistente> getAsistente(){
         ArrayList<Asistente> lista = new ArrayList();
         try {
             conn=Conexion.obtener();

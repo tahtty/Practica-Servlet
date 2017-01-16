@@ -57,7 +57,7 @@
     </nav>
     <div class="container usuarios">
       <h2>Asistentes a las conferencias</h2>
-      <button type="button" class="btn btn-primary" id="registar"><a href="InsertarAsistente">Registrar Nuevo</a></button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregar" id="registar"><a href="#">Registrar Nuevo</a></button>
       <table id="tablaUsuarios" class="table table-bordered table-striped">
         <thead>
           <tr>
@@ -73,33 +73,60 @@
           </tr>
         </thead>
         <tbody>
-          <%
-              List<Asistente> cop = (List<Asistente>) request.getAttribute("listaAsistentes");
-              int cont = 0;
-              for(Asistente c: cop){
-                
-          %>
-          <tr>
-            <th scope="row"><%= cont %></th>
-            <td class="id"></td>
-            <td><%=c.getCedula()%></td>
-            <td><%=c.getNombre()%></td>
-            <td><%=c.getApellido()%></td>
-            <td><%=c.getConferencia()%></td>
-            <td><%=c.getCorreo()%></td>
-            <td><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
-            <td><a href="#" data-toggle="modal" data-target="#modalEliminar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
-          </tr>
-           <%
-              cont++;
-            }
-          %>
+          <!--<tr>
+                Se llena con javascript 
+          </tr>-->
         </tbody>
       </table>
     </div>
   
       <!-- Modal -->
   <div class="modal fade" id="modalEliminar" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+          <form action="Conferencia" method="post" name="formulario"> 
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Agregar Asistente</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <select>
+                   <!--
+                    Aquí se debe llamar desde el JavaScript al Servlet AsistenteConferenciaServlet
+                   -->
+                  </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputCedula" name="cedula" placeholder="Cedula del asistente: ">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="inputNombre" name="nombre" placeholder="Nombre del asistente: ">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputApellido" name="apellido" placeholder="Apellido del asistente: ">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputCorreo" name="correo" placeholder="Correo del asistente: ">
+                </div>
+                <div class="form-group">
+                <input type="hidden" class="form-control" id="id" name="id" value="">
+                </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+               <button type="submit" class="btn btn-primary">Agregar</button>
+               <input type="hidden" name="opcion" value="2">
+            </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+      
+      <div class="modal fade" id="modalAgregar" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -123,7 +150,7 @@
     </div>
   </div>
       <script>
-          
+          //las acciones de cada botón link y lo que sea
       </script>
     </body>
 </html>

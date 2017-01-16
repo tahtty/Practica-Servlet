@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -30,17 +31,10 @@ public class AsistentesServlets extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException,SQLException{
         
-        response.setContentType("text/html;charset=UTF-8");
-        Asistente co= new Asistente();
-        request.setAttribute("listaAsistentes",co.getAsistente());
-        String action = request.getParameter("opcion");
-        String exito="Operacion exitosa";
-        String Error="Operacion Fallida";
-        
-        
-        try(PrintWriter out= response.getWriter()){
-            request.getRequestDispatcher("asistente.jsp").forward(request, response);
-        }
+        String json=new Gson().toJson(Asistente.getAsistente());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
