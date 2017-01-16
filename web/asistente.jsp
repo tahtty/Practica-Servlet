@@ -72,7 +72,7 @@
             <th>Eliminar</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id = "tabla">
           <!--<tr>
                 Se llena con javascript 
           </tr>-->
@@ -152,7 +152,23 @@
   </div>
       <script>
            $(document).ready(function(){
-            //parte para eliminar
+        $('#agregar').click(function(event) {
+                            var cedulaVar = $('#inputCedula').val();
+                            var nombreVar = $('#inputNombre').val();
+                            var apellidoVar = $('#inputApellido').val();
+                            var correoVar = $('#inputCorreo').val();
+                            
+                            $.post('InsertarAsistente', {
+                                    cedula: cedulaVar, 
+                                    nombre : nombreVar,
+                                    apellido: apellidoVar,
+                                    correo: correoVar
+                            }, function(responseText) {
+                                    $('#tabla').text(responseText);
+                            });
+                    });    
+        
+        //parte para eliminar
             $(eliminar).click(function(){
                     columnas = $($(event.target).parents("tr")[0]).children();
                     var id = $(columnas[0]).html();
