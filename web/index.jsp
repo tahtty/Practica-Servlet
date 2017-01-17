@@ -42,7 +42,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Inicio</a></li>
             <li><a href="Conferencias">Conferencias</a></li>
-            <li><a href="Asistentes">Asistentes</a></li>
+            <li><a href="asistente.jsp">Asistentes</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#about"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
