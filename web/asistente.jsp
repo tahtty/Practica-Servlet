@@ -149,8 +149,6 @@
       
     </div>
   </div>
-      <script>
-          //las acciones de cada botón link y lo que sea
-      </script>
+      <script src="Script/asistente.js"></script>
     </body>
 </html>
