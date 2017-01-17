@@ -131,7 +131,7 @@
     
       <!-- Modal content-->
       <div class="modal-content">
-          <form action="Conferencia" method="post" name="formulario"> 
+          <form> 
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Eliminar</h4>
@@ -169,10 +169,11 @@
                     });    
         
         //parte para eliminar
-            $(eliminar).click(function(){
+            $(".eliminar").click(function(){
                     columnas = $($(event.target).parents("tr")[0]).children();
-                    var id = $(columnas[0]).html();
+                    var id = $(columnas[1]).html();
                     $(".id").html(id);
+                    console.log(id);
                     data = {"id": id};   
                     $.ajax({  
                       type: "POST",  
@@ -183,6 +184,23 @@
                           //funcion o parte donde se cargan los asistentes 
                       }                
                     });
+            });
+            $('body').on("click",".eliminar",function(){
+               columnas = $($(event.target).parents("tr")[0]).children();
+                    var id = $(columnas[2]).html();
+                    $(".id").html(id);
+                    console.log(id);
+                    data = {"id": id};   
+                    $.ajax({  
+                      type: "POST",  
+                      url: "./BorrarAsistente",  
+                      data: data,  
+                      success: function(){
+                          
+                          //funcion o parte donde se cargan los asistentes 
+                      }                
+                    });
+                    
             });
           });
       </script>
