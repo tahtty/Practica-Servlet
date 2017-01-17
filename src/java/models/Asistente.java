@@ -129,7 +129,7 @@ public class Asistente {
             Connection con=base.getConnection();
             con=Conexion.obtener();
              Statement stp=con.createStatement();
-            stp.executeUpdate("delete from asistentes where Cedula="+id);
+            stp.executeUpdate("delete from asistente where Cedula="+id);
             
             return "Se ha eliminado correctamente";
   
