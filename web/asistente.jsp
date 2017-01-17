@@ -81,7 +81,7 @@
     </div>
   
       <!-- Modal -->
-  <div class="modal fade" id="modalEliminar" role="dialog">
+  <div class="modal fade" id="modalAgregar" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -126,7 +126,7 @@
     </div>
   </div>
       
-      <div class="modal fade" id="modalAgregar" role="dialog">
+      <div class="modal fade" id="modalEliminar" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -141,14 +141,35 @@
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-               <button type="submit" class="btn btn-primary">Eliminar</button>
+               <button type="submit" class="btn btn-primary borrar">Eliminar</button>
                <input type="hidden" name="opcion" value="2">
+               <input type="hidden" class="form-control id" id="id" name="id" value="">
             </div>
         </form>
       </div>
       
     </div>
   </div>
+      <script>
+           $(document).ready(function(){
+            //parte para eliminar
+            $(eliminar).click(function(){
+                    columnas = $($(event.target).parents("tr")[0]).children();
+                    var id = $(columnas[0]).html();
+                    $(".id").html(id);
+                    data = {"id": id};   
+                    $.ajax({  
+                      type: "POST",  
+                      url: "./BorrarAsistente",  
+                      data: data,  
+                      success: function(){
+                          alert("Eliminado");
+                          //funcion o parte donde se cargan los asistentes 
+                      }                
+                    });
+            });
+          });
+      </script>
       <script src="Script/asistente.js"></script>
     </body>
 </html>
