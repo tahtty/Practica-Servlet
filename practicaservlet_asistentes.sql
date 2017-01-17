@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: practicaservlet
+-- Host: 127.0.0.1    Database: practicaservlet
 -- ------------------------------------------------------
 -- Server version	5.7.17-log
 
@@ -16,29 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `conferencia`
+-- Table structure for table `asistentes`
 --
 
-DROP TABLE IF EXISTS `conferencia`;
+DROP TABLE IF EXISTS `asistentes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `conferencia` (
-  `idConferencia` int(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` varchar(45) NOT NULL,
-  `Fecha` datetime NOT NULL,
-  `Descripcion` varchar(45) NOT NULL,
-  PRIMARY KEY (`idConferencia`),
-  UNIQUE KEY `idConferencia_UNIQUE` (`idConferencia`)
+CREATE TABLE `asistentes` (
+  `ID` int(4) NOT NULL AUTO_INCREMENT,
+  `Cedula` varchar(15) NOT NULL,
+  `Nombre` varchar(50) NOT NULL,
+  `Apellido` varchar(50) NOT NULL,
+  `Conferencia` int(11) NOT NULL,
+  `Correo` varchar(20) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`),
+  KEY `Conferencia` (`Conferencia`),
+  CONSTRAINT `asistentes_ibfk_1` FOREIGN KEY (`Conferencia`) REFERENCES `conferencia` (`idconferencia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `conferencia`
+-- Dumping data for table `asistentes`
 --
 
-LOCK TABLES `conferencia` WRITE;
-/*!40000 ALTER TABLE `conferencia` DISABLE KEYS */;
-/*!40000 ALTER TABLE `conferencia` ENABLE KEYS */;
+LOCK TABLES `asistentes` WRITE;
+/*!40000 ALTER TABLE `asistentes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asistentes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-15 14:17:31
+-- Dump completed on 2017-01-16 21:29:58
